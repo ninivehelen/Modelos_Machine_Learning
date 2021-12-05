@@ -1,6 +1,6 @@
 # Modelos_Machine_Learning
  
- Machine Learning é uma tecnologia onde os computadores tem a capacidade de </br> aprender de acordo com as respostas esperadas por meio associações de diferentes</br>
+ Machine Learning é uma tecnologia onde os computadores tem a capacidade de </br> aprender de acordo com as respostas esperadas por meio de associações diferentes</br>
  
  <img align="center" alt="Rafa-Js" height="280" width="500" src="https://github.com/ninivehelen/Modelos_Machine_Learning/blob/master/ml.jpg"></br>
  
