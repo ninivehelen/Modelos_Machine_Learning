@@ -4,7 +4,10 @@ import seaborn as sns
 import numpy as np
 import plotly.express as px
 
+import pickle
+
 from sklearn.preprocessing import StandardScaler
+from sklearn.model_selection import train_test_split
 
 # Etapa de exploração de dados
 # Dicionário de dados client id = id do cliente, income = renda da pessoa, age = idade da pessoa, load = divída que a pessoa possuí, default = se pagou 0 caso contrario 1. 
@@ -110,9 +113,21 @@ print(X_credit[:, 0].max())
 #Coloando na mesma escala 
 scaler_credit = StandardScaler()
 X_credit = scaler_credit.fit_transform(X_credit)
+
+#imprimindo o escalonamento realizado 
 print(X_credit[:, 0].min(), X_credit[:, 1].min(), X_credit[:, 2].min())
 print(X_credit[:, 0].max(), X_credit[:, 1].max(), X_credit[:, 2].max())
 
+# Divisão da base de treinamento e teste 
+
+X_credit_treinamento, X_credit_teste, y_credit_treinamento, y_credit_teste = train_test_split(X_credit, Y_credit, test_size = 0.25, random_state = 0)
+
+print(X_credit_treinamento.shape)
+print(y_credit_treinamento.shape)
 
 
+#Salvando as alterações para nao precisar rodar novamente
+
+with open('pre_processamento_dados/credito/credit.pkl', mode = 'wb') as f:
+     pickle.dump([X_credit_treinamento, y_credit_treinamento, X_credit_teste, y_credit_teste], f)
 

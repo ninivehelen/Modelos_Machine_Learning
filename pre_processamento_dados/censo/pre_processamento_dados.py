@@ -1,5 +1,6 @@
 import pandas as pd 
 import numpy as np
+import pickle
 
 import plotly.express as px
 import seaborn as sns
@@ -8,7 +9,8 @@ import matplotlib.pyplot as plt
 from sklearn.preprocessing import LabelEncoder
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.compose import ColumnTransformer
-
+from sklearn.preprocessing import StandardScaler
+from sklearn.model_selection import train_test_split
 
 # LabelEncoder
 LabelEncoder_teste = LabelEncoder()
@@ -92,12 +94,28 @@ X_census[:,13] = label_encoder_country.fit_transform(X_census[:,13])
 onehotencoder_census = ColumnTransformer(transformers=[('OneHot', OneHotEncoder(), [1,3,5,6,7,8,9,13])], remainder='passthrough')
 X_census = onehotencoder_census.fit_transform(X_census).toarray()
 print(X_census[0])
+print("dados")
+print(X_census.shape)
 
+# Escalonando os dados para que eles fique na mesma medida.
+scaler_census = StandardScaler()
+X_census = scaler_census.fit_transform(X_census)
+print("dados escalonados")
+print(X_census[0])
 
+# dividindo treinamento e teste, 0.15 para teste.
+X_census_treinaento, X_census_teste, y_census_treinamento, y_census_teste = train_test_split(X_census, Y_census, test_size= 0.15, random_state = 0)
 
+print(X_census_treinaento.shape)
+print(y_census_treinamento.shape)
 
+print(X_census_teste.shape)
+print(y_census_teste.shape)
 
+# Salvando os dados para nao precisa processar novamente 
 
+with open('pre_processamento_dados/censo/census.pkl', mode = 'wb') as f:
+     pickle.dump([X_census_treinaento, y_census_treinamento, X_census_teste, y_census_teste], f)
 
 
 
