@@ -110,7 +110,7 @@ print(X_credit[:, 0].max())
 
 # padronizando os dados 
 
-#Coloando na mesma escala 
+#Colocando na mesma escala 
 scaler_credit = StandardScaler()
 X_credit = scaler_credit.fit_transform(X_credit)
 
@@ -124,7 +124,6 @@ X_credit_treinamento, X_credit_teste, y_credit_treinamento, y_credit_teste = tra
 
 print(X_credit_treinamento.shape)
 print(y_credit_treinamento.shape)
-
 
 #Salvando as alterações para nao precisar rodar novamente
 
