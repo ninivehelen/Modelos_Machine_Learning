@@ -2,7 +2,7 @@ import pickle
 from sklearn.tree import DecisionTreeClassifier
 from sklearn import tree
 import matplotlib as plt 
-with open('risco_credito.pkl', 'rb') as f:
+with open('pre_processamento_dados/credito/risco_credito.pkl', 'rb') as f:
     X_risco_credit, y_risco_credit =  pickle.load(f)
 
 print(X_risco_credit)
