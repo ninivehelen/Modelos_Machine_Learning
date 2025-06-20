@@ -60,5 +60,6 @@ def unir_dados_negativos_dados_positivos():
 if __name__ == "__main__":
     criar_dados_negativos()
     unir_dados_negativos_dados_positivos()
+    #tratamentodados
     
 
