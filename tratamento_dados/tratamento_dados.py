@@ -1,8 +1,15 @@
 import pandas as pd 
-diretorio = 'dados_acidentes'
+import pickle 
+from sklearn.preprocessing import LabelEncoder
+from sklearn.preprocessing import OneHotEncoder
+from sklearn.compose import ColumnTransformer
+from sklearn.preprocessing import StandardScaler
+from sklearn.model_selection import train_test_split
+
+diretorio = 'dados_acidentes_prf'
 
 # Função para tratar os dados    
-def tratamento_dados(base_dados_positivos_negativos):
+def analisa_dados(base_dados_positivos_negativos):
     print(base_dados_positivos_negativos)
     print("Quantidade de colunas antes de remover as desnecessárias")
     print(base_dados_positivos_negativos.shape[1])
@@ -38,7 +45,67 @@ def tratamento_dados(base_dados_positivos_negativos):
 # Analisando um pouco os dados 
     print("vendo a descrição dos dados")
     print(base_dados_positivos_negativos.describe())
-   
+    tratamento_dados(base_dados_positivos_negativos)
+
+
+def tratamento_dados(df_acidente):
+    df_filtra_acidente = df_acidente.sample(n=3000, random_state=42)
+    # Divisão da base de dados, previsores e a classe 
+    print('colunas', df_filtra_acidente.columns)
+    X_acidente = df_filtra_acidente.iloc[:, 1:15].values
+    Y_acidente = df_filtra_acidente.iloc[:, 15].values
+    print("Visualizando variáveis previsoras")
+    print(X_acidente[0])
+    # Transformar variáveis categóricas em númericas
+    Label_encoder_dia_semana = LabelEncoder()
+    Label_encoder_horario = LabelEncoder()
+    Label_encoder_uf = LabelEncoder()
+    Label_encoder_municipio = LabelEncoder()
+    Label_encoder_fase_dia = LabelEncoder()	
+    Label_encoder_sentido_via = LabelEncoder()	
+    Label_encoder_condicao_metereologica = LabelEncoder()
+    Label_encoder_tipo_pista = LabelEncoder()
+    Label_encoder_tracado_via = LabelEncoder()
+    Label_encoder_uso_solo = LabelEncoder()
+    # convertendo variavel categorica para númerica
+    X_acidente[:, 0] = Label_encoder_dia_semana.fit_transform(X_acidente[:,0])
+    X_acidente[:, 1] = Label_encoder_horario.fit_transform(X_acidente[:,1])
+    X_acidente[:, 2] = Label_encoder_uf.fit_transform(X_acidente[:,2])
+    X_acidente[:, 5] = Label_encoder_municipio.fit_transform(X_acidente[:,5])
+    X_acidente[:, 6] = Label_encoder_fase_dia.fit_transform(X_acidente[:, 6])
+    X_acidente[:, 7] = Label_encoder_sentido_via.fit_transform(X_acidente[:, 7])
+    X_acidente[:, 8] = Label_encoder_condicao_metereologica.fit_transform(X_acidente[:, 8])
+    X_acidente[:, 9] = Label_encoder_tipo_pista.fit_transform(X_acidente[:, 9])
+    X_acidente[:, 10] = Label_encoder_tracado_via.fit_transform(X_acidente[:, 10])
+    X_acidente[:, 11] = Label_encoder_uso_solo.fit_transform(X_acidente[:, 11])
+    
+    print("Visualizando após conventer categórica para númerica")
+    print(X_acidente[0])
+
+    # É necessário utilizar um que complementa o label coder. OneHotEncoder
+# Por que é importante usar um complemento ?  por que o indices da categorias influênciam, nos calculos. o menor indice por ser considerado menos importantes, mas são somente categórias diferentes.
+    onehotencoder_acidente = ColumnTransformer(transformers=[('OneHot', OneHotEncoder(), [0, 1, 2, 5, 6, 7, 8, 9, 10, 11 ])] , remainder = 'passthrough') 
+    X_acidente = onehotencoder_acidente.fit_transform(X_acidente).toarray()
+    print("Aplicando OneHot")
+    print(X_acidente.shape)
+    print(X_acidente)
+
+# Realizando o escalonamento dos dados, pois longitude e latitude é bem mais alto, apesar de usar random flores, preferir escalonar
+
+    scaler_acidente  = StandardScaler()
+    X_acidente = scaler_acidente.fit_transform(X_acidente)
+    print("Após escalonamento")
+    print(X_acidente)
+
+# Divisão de treinamento e divisão de teste, pois é necessário fazer a divisão para aplicar o machine learning 
+    
+    X_treinamento_acidente, X_teste_acidente , Y_treinamento_acidente, Y_teste_acidente = train_test_split(X_acidente, Y_acidente, test_size = 0.35, random_state= 0)
+    # Salvar a variavel, para que não precise ser executado novamente 
+    with open(diretorio+'/acidente.pkl', mode = 'wb') as f:
+         pickle.dump([X_treinamento_acidente, Y_treinamento_acidente, X_teste_acidente, Y_teste_acidente], f)
+    print("acidente.pkl salvo")
+
 if __name__ == "__main__":
     base_dados_positivos_negativos = pd.read_csv(diretorio+'/detran_acidentes_positivos_negativos_unido.csv')
-    tratamento_dados(base_dados_positivos_negativos)
+    analisa_dados(base_dados_positivos_negativos)
+    
