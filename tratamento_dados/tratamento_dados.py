@@ -49,18 +49,19 @@ def analisa_dados(base_dados_positivos_negativos):
 
 
 def tratamento_dados(df_acidente):
-    df_filtra_acidente = df_acidente.sample(n=3000, random_state=42)
+    df_filtra_acidente = df_acidente.sample(n=10000, random_state=42)
     # Divisão da base de dados, previsores e a classe 
     print('colunas', df_filtra_acidente.columns)
-    X_acidente = df_filtra_acidente.iloc[:, 1:15].values
+    X_acidente = df_filtra_acidente.iloc[:, [1, 2, 4, 5, 7, 8, 9, 10, 11, 12, 13, 14]].values
     Y_acidente = df_filtra_acidente.iloc[:, 15].values
     print("Visualizando variáveis previsoras")
     print(X_acidente[0])
+    print(X_acidente.shape)
     # Transformar variáveis categóricas em númericas
     Label_encoder_dia_semana = LabelEncoder()
     Label_encoder_horario = LabelEncoder()
-    Label_encoder_uf = LabelEncoder()
-    Label_encoder_municipio = LabelEncoder()
+    # Label_encoder_uf = LabelEncoder()
+    # Label_encoder_municipio = LabelEncoder()
     Label_encoder_fase_dia = LabelEncoder()	
     Label_encoder_sentido_via = LabelEncoder()	
     Label_encoder_condicao_metereologica = LabelEncoder()
@@ -70,14 +71,14 @@ def tratamento_dados(df_acidente):
     # convertendo variavel categorica para númerica
     X_acidente[:, 0] = Label_encoder_dia_semana.fit_transform(X_acidente[:,0])
     X_acidente[:, 1] = Label_encoder_horario.fit_transform(X_acidente[:,1])
-    X_acidente[:, 2] = Label_encoder_uf.fit_transform(X_acidente[:,2])
-    X_acidente[:, 5] = Label_encoder_municipio.fit_transform(X_acidente[:,5])
-    X_acidente[:, 6] = Label_encoder_fase_dia.fit_transform(X_acidente[:, 6])
-    X_acidente[:, 7] = Label_encoder_sentido_via.fit_transform(X_acidente[:, 7])
-    X_acidente[:, 8] = Label_encoder_condicao_metereologica.fit_transform(X_acidente[:, 8])
-    X_acidente[:, 9] = Label_encoder_tipo_pista.fit_transform(X_acidente[:, 9])
-    X_acidente[:, 10] = Label_encoder_tracado_via.fit_transform(X_acidente[:, 10])
-    X_acidente[:, 11] = Label_encoder_uso_solo.fit_transform(X_acidente[:, 11])
+    # X_acidente[:, 2] = Label_encoder_uf.fit_transform(X_acidente[:,2])
+    # X_acidente[:, 5] = Label_encoder_municipio.fit_transform(X_acidente[:,5])
+    X_acidente[:, 4] = Label_encoder_fase_dia.fit_transform(X_acidente[:, 4])
+    X_acidente[:, 5] = Label_encoder_sentido_via.fit_transform(X_acidente[:, 5])
+    X_acidente[:, 6] = Label_encoder_condicao_metereologica.fit_transform(X_acidente[:, 6])
+    X_acidente[:, 7] = Label_encoder_tipo_pista.fit_transform(X_acidente[:, 7])
+    X_acidente[:, 8] = Label_encoder_tracado_via.fit_transform(X_acidente[:, 8])
+    X_acidente[:, 9] = Label_encoder_uso_solo.fit_transform(X_acidente[:, 9])
     
     print("Visualizando após conventer categórica para númerica")
     print(X_acidente[0])
@@ -99,7 +100,7 @@ def tratamento_dados(df_acidente):
 
 # Divisão de treinamento e divisão de teste, pois é necessário fazer a divisão para aplicar o machine learning 
     
-    X_treinamento_acidente, X_teste_acidente , Y_treinamento_acidente, Y_teste_acidente = train_test_split(X_acidente, Y_acidente, test_size = 0.35, random_state= 0)
+    X_treinamento_acidente, X_teste_acidente , Y_treinamento_acidente, Y_teste_acidente = train_test_split(X_acidente, Y_acidente, test_size = 0.25, random_state = 0)
     # Salvar a variavel, para que não precise ser executado novamente 
     with open(diretorio+'/acidente.pkl', mode = 'wb') as f:
          pickle.dump([X_treinamento_acidente, Y_treinamento_acidente, X_teste_acidente, Y_teste_acidente], f)

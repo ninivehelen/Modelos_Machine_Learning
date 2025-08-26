@@ -1,7 +1,7 @@
 import glob
 import os 
 import pandas as pd 
-diretorio = 'dados_acidentes'
+diretorio = 'dados_acidentes_prf'
 
 def unir_arquivos():
     arquivos_csv = glob.glob(os.path.join(diretorio+ "/datatran*.csv")) 
