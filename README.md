@@ -6,6 +6,10 @@
 ![GitHub language count](https://img.shields.io/github/languages/count/ninivehelen/Modelos_Machine_Learning?color=pink&style=for-the-badge)
 ![GitHub top language](https://img.shields.io/github/languages/top/ninivehelen/Modelos_Machine_Learning?color=pink&style=for-the-badge)
 
+# Projetos do Repositório Principal
+
+- [Previsao de Risco de Acidentes](https://github.com/ninivehelen/Modelos_Machine_Learning/tree/acidentes-branch)
+  
 Utilizando técnicas de machine learning para fazer previsões nos dados.
 
 ### 🛠️ Ferramentas
@@ -21,10 +25,5 @@ Utilizando técnicas de machine learning para fazer previsões nos dados.
 
 * https://github.com/ninivehelen
 
-# Projetos do Repositório Principal
-
-# Projetos do Repositório Principal
-
-- [Previsao de Risco de Acidentes](https://github.com/ninivehelen/Modelos_Machine_Learning/tree/acidentes-branch)
 
 
