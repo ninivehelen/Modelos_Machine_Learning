@@ -23,5 +23,8 @@ Utilizando técnicas de machine learning para fazer previsões nos dados.
 
 # Projetos do Repositório Principal
 
-- [Previsao de Risco de Acidentes]([https://github.com/seunome/analise-principal/tree/acidentes-branch/Previsao_Risco_Acidentes](https://github.com/ninivehelen/Modelos_Machine_Learning/tree/acidentes-branch))
+# Projetos do Repositório Principal
+
+- [Previsao de Risco de Acidentes](https://github.com/ninivehelen/Modelos_Machine_Learning/tree/acidentes-branch)
+
 
